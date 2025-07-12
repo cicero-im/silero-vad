@@ -6,9 +6,10 @@ import pandas as pd
 import numpy as np
 import torchaudio
 import warnings
-import random
 import torch
 import gc
+import secrets
+
 warnings.filterwarnings('ignore')
 
 
@@ -107,7 +108,7 @@ class SileroVadDataset(Dataset):
 
     def load_speech_sample(self, idx=None):
         if idx is None:
-            idx = random.randint(0, len(self.index_dict) - 1)
+            idx = secrets.SystemRandom().randint(0, len(self.index_dict) - 1)
         wav = read_audio(self.index_dict[idx]['audio_path'], self.sr).numpy()
 
         if len(wav) % self.num_samples != 0:
